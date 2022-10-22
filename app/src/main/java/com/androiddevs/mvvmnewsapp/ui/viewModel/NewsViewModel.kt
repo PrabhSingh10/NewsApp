@@ -1,6 +1,5 @@
 package com.androiddevs.mvvmnewsapp.ui.viewModel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,7 +14,8 @@ import retrofit2.Response
 //and managing the data for an Activity or a Fragment .
 //ViewModel classes are used to store the data even if
 //there are configuration changes like rotating screen.
-class NewsViewModel(private val newsRepository : NewsRepository) : ViewModel() {
+class NewsViewModel(private val newsRepository: NewsRepository)
+    : ViewModel() {
 
     val breakingNews = MutableLiveData<Resource<NewsResponse>>()
     var breakingNewsPage = 1
@@ -35,7 +35,7 @@ class NewsViewModel(private val newsRepository : NewsRepository) : ViewModel() {
 
         val result = newsRepository.getBreakingNews(countryCode, breakingNewsPage)
 
-        //We get a 'Response' data type result and now we have tp convert it into
+        //We get a 'Response' data type result and now we have to convert it into
         //Resource<NewsResponse> type using handlingBreakingNews()
         breakingNews.postValue(handlingBreakingNews(result))
     }
@@ -113,4 +113,5 @@ class NewsViewModel(private val newsRepository : NewsRepository) : ViewModel() {
     }
 
     fun getSavedNews() = newsRepository.getAllArticles()
+
 }

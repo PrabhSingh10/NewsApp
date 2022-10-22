@@ -63,6 +63,8 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
                     //thread and resumes it after a specified time.
                 editable?.let {
                     if(it.toString().isNotEmpty()){
+                        newsViewModel.searchNewsPage = 1
+                        newsViewModel.searchNewsResponse = null
                         newsViewModel.searchingNews(it.toString())
                     }
                 }
