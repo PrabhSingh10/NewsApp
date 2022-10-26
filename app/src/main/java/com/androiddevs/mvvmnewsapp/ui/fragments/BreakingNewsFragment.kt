@@ -58,9 +58,10 @@ class BreakingNewsFragment : Fragment() {
 
         newsViewModel = (activity as NewsActivity).newsViewModel
 
-        //In case of viewModel in a fragment, we always use 'viewLifecycleOwner' as
-        //lifeCycleOwner instead of 'this' (Fragment's view) as if there is a change like
-        //rotation of screen the view will reset but the viewModel will not
+        //viewLifeCycleOwner : A LifecycleOwner that represents the Fragment's View lifecycle.
+        // In most cases, this mirrors the lifecycle of the Fragment itself, but in cases of
+        // detached Fragments, the lifecycle of the Fragment can be considerably longer than
+        // the lifecycle of the View itself.
         newsViewModel.breakingNews.observe(viewLifecycleOwner, Observer { response ->
             when(response){
                 is Resource.Success -> {
@@ -123,17 +124,14 @@ class BreakingNewsFragment : Fragment() {
             val visibleItemCount = layoutManager.childCount
             val totalItem = layoutManager.itemCount
                 //Total number of items that are bound to the recycler view at the moment
-                //not necessarily equal to RecyclerView.getItemCount
+                //(including items in scrapped view and waiting view) not necessarily
+                //equal to RecyclerView.getItemCount()
 
             val isNotLoadingAndNotAtLastPage = !isLastPage && !isLoading
-            Log.e(TAG, "isNotLoadingAndNotAtLastPage : $isNotLoadingAndNotAtLastPage")
             val isAtLastItem = firstVisibleItemPosition + visibleItemCount >= totalItem
-            Log.e(TAG, "isAtLastItem : $isAtLastItem")
                 //The last item of the page not necessarily the last item of list
             val isNotAtBeginning = firstVisibleItemPosition >= 0
-            Log.e(TAG, "isNotAtBeginning : $isNotAtBeginning")
             val isTotalMoreThanVisible = totalItem >= QUERY_PAGE_SIZE
-            Log.e(TAG, "isTotalMoreThanVisible : $isTotalMoreThanVisible")
             val shouldPaginate = isNotLoadingAndNotAtLastPage && isAtLastItem && isNotAtBeginning
                     && isTotalMoreThanVisible && isScrolling
 
