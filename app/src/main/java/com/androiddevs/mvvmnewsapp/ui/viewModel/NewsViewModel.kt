@@ -55,7 +55,6 @@ class NewsViewModel(private val newsRepository: NewsRepository)
                     oldArticles?.addAll(newsArticle)
                 }
 
-                //calling Resource.Success(DATA)
                 return Resource.Success(breakingNewsResponse ?: it)
                     //it's impossible that breakingNewsResponse is null here.
                     //Still the compiler complains because theoretically, it could be null.
@@ -97,7 +96,6 @@ class NewsViewModel(private val newsRepository: NewsRepository)
                 }
 
                 return Resource.Success(searchNewsResponse ?: it)
-                //calling Resource.Success(DATA)
             }
         }
 
