@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.androiddevs.mvvmnewsapp.R
 import com.androiddevs.mvvmnewsapp.adapter.NewsAdapter
 import com.androiddevs.mvvmnewsapp.databinding.FragmentBreakingNewsBinding
+import com.androiddevs.mvvmnewsapp.models.Article
 import com.androiddevs.mvvmnewsapp.ui.activity.NewsActivity
 import com.androiddevs.mvvmnewsapp.ui.viewModel.NewsViewModel
 import com.androiddevs.mvvmnewsapp.util.Constants.Companion.QUERY_PAGE_SIZE
@@ -44,18 +45,19 @@ class BreakingNewsFragment : Fragment() {
 
         setUpRecyclerView()
 
-        newsAdapter.setItemClickListener {
+        newsAdapter.onClick(object : NewsAdapter.ClickListener{
+            override fun setItemClickListener(article: Article) {
+                val bundle = Bundle()
 
-            val bundle = Bundle()
+                bundle.putParcelable("article", article)
 
-            bundle.putParcelable("article", it)
+                findNavController().navigate(
+                    R.id.action_breakingNewsFragment_to_articleFragment,
+                    bundle
+                )
+            }
 
-            findNavController().navigate(
-                R.id.action_breakingNewsFragment_to_articleFragment,
-                bundle
-            )
-
-        }
+        })
 
         newsViewModel = (activity as NewsActivity).newsViewModel
 

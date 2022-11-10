@@ -15,6 +15,7 @@ import com.androiddevs.mvvmnewsapp.R
 import com.androiddevs.mvvmnewsapp.adapter.NewsAdapter
 import com.androiddevs.mvvmnewsapp.databinding.FragmentSavedNewsBinding
 import com.androiddevs.mvvmnewsapp.db.ArticlesDatabase
+import com.androiddevs.mvvmnewsapp.models.Article
 import com.androiddevs.mvvmnewsapp.ui.activity.NewsActivity
 import com.androiddevs.mvvmnewsapp.ui.viewModel.NewsViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -48,15 +49,19 @@ class SavedNewsFragment : Fragment() {
             newsAdapter.differ.submitList(it)
         })
 
-        newsAdapter.setItemClickListener {
-            val bundle = Bundle()
-            bundle.putParcelable("article", it)
+        newsAdapter.onClick(object : NewsAdapter.ClickListener{
+            override fun setItemClickListener(article: Article) {
+                val bundle = Bundle()
 
-            findNavController().navigate(
-                R.id.action_savedNewsFragment_to_articleFragment,
-                bundle
-            )
-        }
+                bundle.putParcelable("article", article)
+
+                findNavController().navigate(
+                    R.id.action_breakingNewsFragment_to_articleFragment,
+                    bundle
+                )
+            }
+
+        })
 
         val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.UP or ItemTouchHelper.DOWN,

@@ -71,21 +71,25 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
                 .into(holder.ivArticleImage)
 
             setOnClickListener {
-                itemClickListener?.let {
-                    it(article)
-                }
+                onItemClickListener?.setItemClickListener(article)
             }
+
         }
+
     }
 
     override fun getItemCount(): Int {
         return differ.currentList.size
     }
 
-    private var itemClickListener : ((Article) -> Unit)? = null
-        //It will get an Article Item but return nothing
-
-    fun setItemClickListener(Listener : ((Article) -> Unit)) {
-        itemClickListener = Listener
+    interface ClickListener{
+        fun setItemClickListener(article : Article)
     }
+
+    private var onItemClickListener : ClickListener? = null
+
+    fun onClick(newClickListener : ClickListener){
+        onItemClickListener = newClickListener
+    }
+
 }

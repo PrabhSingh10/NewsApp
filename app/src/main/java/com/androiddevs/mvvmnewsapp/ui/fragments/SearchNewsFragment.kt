@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.androiddevs.mvvmnewsapp.R
 import com.androiddevs.mvvmnewsapp.adapter.NewsAdapter
 import com.androiddevs.mvvmnewsapp.databinding.FragmentSearchNewsBinding
+import com.androiddevs.mvvmnewsapp.models.Article
 import com.androiddevs.mvvmnewsapp.ui.activity.NewsActivity
 import com.androiddevs.mvvmnewsapp.ui.viewModel.NewsViewModel
 import com.androiddevs.mvvmnewsapp.util.Constants
@@ -101,15 +102,19 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
             }
         })
 
-        newsAdapter.setItemClickListener {
-            val bundle = Bundle()
-            bundle.putParcelable("article", it)
+        newsAdapter.onClick(object : NewsAdapter.ClickListener{
+            override fun setItemClickListener(article: Article) {
+                val bundle = Bundle()
 
-            findNavController().navigate(
-                R.id.action_searchNewsFragment_to_articleFragment,
-                bundle
-            )
-        }
+                bundle.putParcelable("article", article)
+
+                findNavController().navigate(
+                    R.id.action_breakingNewsFragment_to_articleFragment,
+                    bundle
+                )
+            }
+
+        })
 
     }
 
