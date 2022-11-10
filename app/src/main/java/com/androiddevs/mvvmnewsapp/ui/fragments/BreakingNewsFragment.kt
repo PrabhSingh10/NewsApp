@@ -45,6 +45,7 @@ class BreakingNewsFragment : Fragment() {
         setUpRecyclerView()
 
         newsAdapter.setItemClickListener {
+
             val bundle = Bundle()
 
             bundle.putParcelable("article", it)

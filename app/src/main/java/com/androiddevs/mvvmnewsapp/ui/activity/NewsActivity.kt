@@ -46,7 +46,8 @@ class NewsActivity : AppCompatActivity() {
         //via Navigation.findNavController(Activity, @IdRes int) will fail.
         //You should retrieve the NavController directly from the NavHostFragment instead.
         newsBinding?.bottomNavigationView?.setupWithNavController(
-            newsBinding?.newsNavHostFragment?.getFragment<NavHostFragment>()!!.navController)
+            newsBinding?.newsNavHostFragment?.getFragment<NavHostFragment>()!!.navController
+        )
 
         //newsBinding?.newsNavHostFragment?.getFragment<NavHostFragment>()
         //returns the NavHostFragment
